@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letter - Elroi Clinic</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, "Noto Sans Ethiopic", "Nyala", sans-serif;
+            background: #e8e8e8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 16px;
+            min-height: 100vh;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 148mm;
+            margin: 0 auto 14px auto;
+            gap: 12px;
+        }
+
+        .site-select-wrap {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .site-select-wrap label {
+            font-size: 13px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .site-select {
+            padding: 8px 12px;
+            font-size: 13px;
+            border: 1px solid #999;
+            border-radius: 5px;
+            background: white;
+            min-width: 180px;
+            cursor: pointer;
+        }
+
+        .print-btn {
+            background: #1a5f9e;
+            color: white;
+            border: none;
+            padding: 11px 28px;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+        }
+
+        .print-btn:hover {
+            background: #144a7a;
+        }
+
+        .page-wrapper {
+            width: 100%;
+            min-height: 100vh;
+            padding: 30px;
+        }
+
+        .paper {
+            width: 100%;
+            max-width: 1100px;
+            min-height: 650px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px 55px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top {
+            display: flex;
+            align-items: center;
+            justify-content: left;
+            gap: 22px;
+            padding-bottom: 15px;
+            
+            flex-shrink: 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo img {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .heading {
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1.35;
+        }
+
+        .heading label {
+            display: flex;
+            justify-content: left;
+        }
+
+        .tel {
+            margin-top: 4px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .content {
+            flex: 1;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-end;
+        }
+
+        .client-section {
+            width: 420px;
+            margin-bottom: 20px;
+        }
+
+        .YHBC{
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .YHBC input{
+            text-transform: uppercase;
+            font-size: 13px;
+            font-weight: 700;
+            width: 150px;
+            outline: none;
+            border: none;
+            border-bottom: 1px solid black;
+        }
+
+        .client-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .client-row label {
+            font-size: 15px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .client input {
+            border: none;
+            border-bottom: 1.5px solid #000;
+            background: transparent;
+            outline: none;
+            font-family: inherit;
+            font-size: 15px;
+            padding: 3px 5px;
+            height: 30px;
+        }
+
+        .client input:focus {
+            border-bottom-color: #2563eb;
+        }
+
+        .first-input {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .second-line {
+            margin-top: 10px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .second-line input {
+            width: calc(100% - 115px);
+        }
+
+        @media screen and (max-width: 700px) {
+            .page-wrapper {
+                padding: 15px;
+            }
+
+            .paper {
+                min-height: 600px;
+                padding: 30px 20px;
+            }
+
+            .top {
+                gap: 12px;
+            }
+
+            .logo img {
+                width: 60px;
+                height: 60px;
+            }
+
+            .heading {
+                font-size: 16px;
+            }
+
+            .tel {
+                font-size: 12px;
+            }
+            
+
+            .client-section {
+                width: 100%;
+            }
+
+            .client-row label {
+                font-size: 13px;
+            }
+
+            .client input {
+                font-size: 13px;
+            }
+
+            .second-line input {
+                width: calc(100% - 100px);
+            }
+        }
+
+        @page {
+            size: A6 landscape;
+            margin: 0;
+        }
+
+        @media print {
+            html,
+            body {
+                width: 148mm;
+                height: 105mm;
+                margin: 0;
+                padding: 0;
+                background: #fff;
+            }
+
+            body {
+                overflow: hidden;
+            }
+
+            .page-wrapper {
+                width: 148mm;
+                height: 105mm;
+                margin: 0;
+                padding: 0;
+            }
+
+            .paper {
+                width: 148mm;
+                height: 105mm;
+                min-height: 0;
+                max-width: none;
+                margin: 0;
+                padding: 7mm 9mm;
+                box-shadow: none;
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .print-btn {
+                display: none !important;
+            }
+
+            .top-bar {
+                display: none;
+            }
+
+            .top {
+                gap: 5mm;
+                padding-bottom: 2.5mm;
+                
+            }
+
+            .logo img {
+                width: 22mm;
+                height: 22mm;
+            }
+
+            .heading {
+                font-size: 12pt;
+                 
+            }
+
+            .tel {
+                margin-top: 1mm;
+                font-size: 8.5pt;
+            }
+
+            .content {
+                flex: 1;
+                display: flex;
+                justify-content: flex-end;
+                align-items: flex-end;
+            }
+
+            .client-section {
+                width: 66mm;
+                margin: 0 0 2mm 0;
+            }
+
+            .YHBC {
+                margin-bottom: 2mm;
+                font-size: 11pt;
+                font-weight: 700;
+            }
+            .YHBC input{
+                border-bottom: none;
+            }
+
+            .client-row {
+                gap: 2mm;
+            }
+
+            .client-row label {
+                font-size: 9pt;
+            }
+
+            .client input {
+                height: 6mm;
+                padding: 0 1mm 0.7mm;
+                font-size: 9pt;
+                border-bottom: 0.35mm solid #000;
+            }
+
+            .second-line {
+                margin-top: 2mm;
+            }
+
+            .second-line input {
+                width: 45mm;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="top-bar">
+        <div class="site-select-wrap">
+            <select id="siteSelect" class="site-select" onchange="window.location.href=this.value;">
+                <option value="marriage.html">Marriage certificate</option>
+                <option value="medical.html">Medical Certificate</option>
+                <option value="Referral.html">Referral Form</option>
+                <option value="CASH INVOICE.html">ATTACHMENT CASH INVOICE</option>
+                <option value="lab.html">Lab Report</option>
+            </select>
+        </div>
+
+        <button
+            id="btnPrint"
+            type="button"
+            class="print-btn"
+            onclick="window.print()"
+        >
+            🖨 Print on A6
+        </button>
+    </div>
+
+    <div class="page-wrapper">
+        <main class="paper">
+            <header class="top">
+                <div class="logo">
+                    <img
+                        src="logo.jpg"
+                        alt="Elroi Clinic Logo"
+                    >
+                </div>
+
+                <div class="heading">
+                    <label>
+                        ከኤልሮኢ መካከለኛ ክሊኒክ
+                    </label>
+
+                    <label class="tel">
+                    Tel: 09 46 55 55 75
+                    </label>
+                </div>
+            </header>
+
+            
+
+            <section class="content">
+                <div class="client-section">
+                    <div class="YHBC">
+                        To <input type="text">
+                    </div>
+
+                    <div class="client">
+                        <div class="client-row">
+                            <label for="client-name">
+                                Client Name:
+                            </label>
+
+                            <input
+                                type="text"
+                                id="client-name"
+                                class="first-input"
+                                autocomplete="off"
+                            >
+                        </div>
+
+                        <div class="second-line">
+                            <input
+                                type="text"
+                                id="client-name-second"
+                                autocomplete="off"
+                            >
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
+ 

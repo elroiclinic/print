@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elroi Medium Clinic - Medical Certificate</title>
+  <style>
+    @page {
+      size: A5;
+      margin: 6mm;
+    }
+ 
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Segoe UI", Arial, "Noto Sans Ethiopic", "Nyala", sans-serif;
+  background: #e8e8e8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+  min-height: 100vh;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 148mm;
+  margin: 0 auto 14px auto;
+  gap: 12px;
+}
+
+.site-select-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.site-select-wrap label {
+  font-size: 13px;
+  font-weight: bold;
+  color: #333;
+}
+
+.site-select {
+  padding: 8px 12px;
+  font-size: 13px;
+  border: 1px solid #999;
+  border-radius: 5px;
+  background: white;
+  min-width: 180px;
+  cursor: pointer;
+}
+
+.print-btn {
+  background: #1a5f9e;
+  color: white;
+  border: none;
+  padding: 11px 28px;
+  font-size: 15px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+
+.print-btn:hover {
+  background: #144a7a;
+}
+
+.certificate {
+  width: 148mm;
+  height: 210mm;
+  max-height: 210mm;
+  background: #fff;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+  padding: 6mm 8mm 5mm;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  color: #111;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-left: 5px;
+  gap: 40px;
+  margin-bottom: 1mm;
+  flex-shrink: 0;
+}
+
+.logo {
+  width: 22mm;
+  height: 22mm;
+  object-fit: contain;
+  flex-shrink: 0;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.clinic-info {
+  flex: 1;
+  line-height: 1.25;
+}
+
+.clinic-info .amharic-name {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.clinic-info .english-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #c41e3a;
+  letter-spacing: 0.3px;
+}
+
+.clinic-info .tel {
+  font-size: 11px;
+  font-weight: 600;
+  margin-top: 1px;
+}
+
+.clinic-info .address {
+  font-size: 12px;
+  color: #333;
+  margin-top: 1px;
+}
+
+.title {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+  text-decoration: underline;
+  margin: 0mm 0 2.5mm;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
+
+.patient-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  margin-bottom: 2.5mm;
+  flex-shrink: 0;
+}
+
+.patient-table td {
+  border: 1px solid #222;
+  padding: 1.8mm 2.2mm;
+  vertical-align: middle;
+}
+
+.patient-table label {
+  font-weight: 600;
+  white-space: nowrap;
+  margin-right: 3px;
+}
+
+.patient-table input,
+.patient-table select {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 12px;
+  font-family: inherit;
+  width: 100%;
+  color: #111;
+}
+
+.patient-table select {
+  cursor: pointer;
+}
+
+.section {
+  margin-top: 1mm;
+  margin-bottom: 8mm;
+  flex-shrink: 0;
+}
+
+.section-label {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 1mm;
+}
+
+.section textarea {
+  width: 100%;
+  border: none;
+  outline: none;
+  resize: none;
+  font-size: 16px;
+  font-family: inherit;
+  line-height: 7mm;
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent calc(7mm - 1px),
+    #333 calc(7mm - 1px),
+    #333 7mm
+  );
+  background-size: 100% 7mm;
+  background-attachment: local;
+  color: #111;
+  padding: 0 2px;
+  height: 21mm;
+  max-height: 10mm;
+  overflow-y: auto;
+  margin-top: 10px;
+}
+
+.rest-row {
+  display: flex;
+  align-items: center;
+  gap: 3mm;
+  margin: 2mm 0;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.rest-row label {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.rest-row input {
+  flex: 1;
+  border: none;
+  border-bottom: 1px solid #333;
+  outline: none;
+  font-size: 14px;
+  font-family: inherit;
+  background: transparent;
+  padding: 1px 2px;
+}
+
+.footer-fields {
+  margin-top: 30px;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.footer-fields .field {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2.2mm;
+}
+
+.footer-fields label {
+  font-weight: 700;
+  min-width: 28mm;
+  white-space: nowrap;
+}
+
+.footer-fields input {
+  flex: 1;
+  border: none;
+  border-bottom: 1px solid #333;
+  outline: none;
+  font-size: 12px;
+  font-family: inherit;
+  background: transparent;
+  padding: 1px 2px;
+}
+
+.footer-fields input[readonly] {
+  color: #111;
+  font-weight: 500;
+}
+
+.thank-you {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 8mm;
+  padding-top: 2mm;
+  border-top: 2.5px double #222;
+  color: #222;
+  letter-spacing: 0.3px;
+  flex-shrink: 0;
+}
+
+@media print {
+  body {
+    background: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .top-bar {
+    display: none !important;
+  }
+
+  .certificate {
+    box-shadow: none !important;
+    margin: 0 !important;
+    width: 148mm !important;
+    height: 210mm !important;
+    max-height: 100vh !important;
+    padding: 6mm 8mm 5mm !important;
+    page-break-after: avoid;
+    page-break-inside: avoid;
+    overflow: hidden !important;
+  }
+
+  input,
+  textarea,
+  select {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    color: #000 !important;
+  }
+
+  .section textarea {
+    background-image: repeating-linear-gradient(
+      transparent,
+      transparent calc(7mm - 1px),
+      #333 calc(7mm - 1px),
+      #333 7mm
+    ) !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+ 
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <div class="site-select-wrap">
+      <select id="siteSelect" class="site-select" onchange="window.location.href=this.value;">
+        <option value="medical.html">Medical Certificate</option>
+        <option value="Referral.html">Referral Form</option>
+        <option value="CASH INVOICE.html">ATTACHMENT CASH INVOICE</option>
+        <option value="lab.html">Lab Report</option>
+        <option value="marriage.html">Marriage certificate</option>
+      </select>
+    </div>
+    <button id="btnPrint" type="button" class="print-btn">🖨 Print on A6</button>
+  </div>
+
+  <div class="certificate" id="certificate">
+    <div class="header">
+      <img src="logo.jpg" style="width: 120px; height: 120px;" class="logo" id="clinicLogo" alt="Elroi Medium Clinic Logo">
+      <div class="clinic-info">
+        <div class="amharic-name">ኤልሮኢ መካከለኛ ክሊኒክ</div>
+        <div class="english-name">Elroi Medium Clinic</div>
+        <div class="tel">Tel: 09 46 55 55 75</div>
+        <div class="address">Addis Ketema Subcity Near Selam Grocery</div>
+      </div>
+    </div>
+
+ 
+<div class="title">Medical Certificate</div>
+
+<table class="patient-table">
+  <tr>
+    <td colspan="2">
+      <label>Name:</label>
+      <input type="text" id="name" placeholder="">
+    </td>
+    <td>
+      <label>Phone:</label>
+      <input type="text" id="phone" placeholder="">
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>Age:</label>
+      <input type="text" id="age" placeholder="">
+    </td>
+    <td>
+      <label>Sex:</label>
+      <select id="sex">
+        <option value=""></option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+      </select>
+    </td>
+    <td>
+      <label>City:</label>
+      <input type="text" id="city" placeholder="">
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <label>Dx:</label>
+      <input type="text" id="dx" placeholder="">
+    </td>
+    <td>
+      <label>Allergy:</label>
+      <input type="text" id="allergy" placeholder="">
+    </td>
+  </tr>
+</table>
+
+<div class="section">
+  <div class="section-label">Diagnosis:</div>
+  <textarea id="diagnosis" rows="1" placeholder=""></textarea>
+</div>
+
+<div class="section">
+  <div class="section-label">Doctor's Recommendation</div>
+  <textarea id="recommendation" rows="3" placeholder=""></textarea>
+</div>
+
+<div class="rest-row">
+  <label>Days of Rest:</label>
+  <input type="text" id="daysRest" placeholder="">
+</div>
+
+<div class="footer-fields">
+  <div class="field">
+    <label>D.r Name:</label>
+    <input type="text" id="drName" placeholder="">
+  </div>
+  <div class="field">
+    <label>D.r Signature:</label>
+    <input type="text" id="drSignature" placeholder="">
+  </div>
+  <div class="field">
+    <label>Date:</label>
+    <input type="text" id="dateField">
+  </div>
+</div>
+
+<div class="thank-you">Thank you for visiting us ! Get well soon!</div>
+ 
+
+  </div>
+
+  <script>
+    (function () {
+      function startDayOfEthiopian(year) {
+        const newYearDay = (year % 4 === 3) ? 12 : 11;
+        return ((year - 1) % 4 === 3) ? newYearDay + 1 : newYearDay;
+      }
+
+      function toEthiopian(gy, gm, gd) {
+        const gregorianMonths = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        const ethiopianMonths = [0, 30, 30, 30, 30, 30, 30, 30, 30, 30, 5, 30, 30, 30, 30];
+
+        if ((gy % 4 === 0 && gy % 100 !== 0) || gy % 400 === 0) {
+          gregorianMonths[2] = 29;
+        }
+
+        let ethiopianYear = gy - 8;
+
+        if (ethiopianYear % 4 === 3) {
+          ethiopianMonths[10] = 6;
+        }
+
+        const newYearDay = startDayOfEthiopian(gy - 8);
+
+        let until = 0;
+
+        for (let i = 1; i < gm; i++) {
+          until += gregorianMonths[i];
+        }
+
+        until += gd;
+
+        let tahissas = (ethiopianYear % 4) === 0 ? 26 : 25;
+
+        if (gy < 1582) {
+          ethiopianMonths[1] = 0;
+          ethiopianMonths[2] = tahissas;
+        } else if (until <= 277 && gy === 1582) {
+          ethiopianMonths[1] = 0;
+          ethiopianMonths[2] = tahissas;
+        } else {
+          tahissas = newYearDay - 3;
+          ethiopianMonths[1] = tahissas;
+        }
+
+        let m;
+        let ethiopianDate;
+
+        for (m = 1; m < ethiopianMonths.length; m++) {
+          if (until <= ethiopianMonths[m]) {
+            ethiopianDate = (m === 1 || ethiopianMonths[m] === 0)
+              ? until + (30 - tahissas)
+              : until;
+            break;
+          } else {
+            until -= ethiopianMonths[m];
+          }
+        }
+
+        if (m > 10) {
+          ethiopianYear += 1;
+        }
+
+        const order = [0, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 1, 2, 3, 4];
+        const ethiopianMonth = order[m];
+
+        return {
+          year: ethiopianYear,
+          month: ethiopianMonth,
+          day: Math.floor(ethiopianDate)
+        };
+      }
+
+      function updateDate() {
+        const now = new Date();
+        const et = toEthiopian(
+          now.getFullYear(),
+          now.getMonth() + 1,
+          now.getDate()
+        );
+
+        const dd = String(et.day).padStart(2, '0');
+        const mm = String(et.month).padStart(2, '0');
+        const yyyy = et.year;
+
+        let hours = now.getHours();
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+
+        hours = hours % 12;
+        hours = hours ? hours : 12;
+
+        const hh = String(hours).padStart(2, '0');
+
+        document.getElementById('dateField').value =
+          `${dd}/${mm}/${yyyy} ${hh}:${minutes}:${seconds} ${ampm}`;
+      }
+
+      const dateField = document.getElementById('dateField');
+      let manualDate = false;
+
+      dateField.addEventListener('click', function () {
+        manualDate = true;
+      });
+
+      function autoUpdateDate() {
+        if (!manualDate) {
+          updateDate();
+        }
+      }
+
+      autoUpdateDate();
+      setInterval(autoUpdateDate, 1000);
+
+      document.getElementById('btnPrint').addEventListener('click', function () {
+        window.print();
+      });
+
+      const STORAGE_KEY = 'elroi_medical_certificate';
+
+      function loadForm() {
+        const raw = localStorage.getItem(STORAGE_KEY);
+
+        if (!raw) return;
+
+        try {
+          const data = JSON.parse(raw);
+
+          document.getElementById('name').value = data.name || '';
+          document.getElementById('phone').value = data.phone || '';
+          document.getElementById('age').value = data.age || '';
+          document.getElementById('sex').value = data.sex || '';
+          document.getElementById('city').value = data.city || '';
+          document.getElementById('dx').value = data.dx || '';
+          document.getElementById('allergy').value = data.allergy || '';
+          document.getElementById('diagnosis').value = data.diagnosis || '';
+          document.getElementById('recommendation').value = data.recommendation || '';
+          document.getElementById('daysRest').value = data.daysRest || '';
+          document.getElementById('drName').value = data.drName || '';
+          document.getElementById('drSignature').value = data.drSignature || '';
+        } catch (e) {}
+      }
+
+      loadForm();
+    })();
+  </script>
+
+</body>
+</html>
